@@ -236,12 +236,13 @@
       </div>
     </section>
 
-    <!-- 8. BOOKING FORM: JavaScript turns it into a WhatsApp message -->
+    <!-- 8. BOOKING: talks to the API (api-consultorio on Render) -->
     <section class="section cta" id="agendar">
       <div class="container split split--center">
         <div class="cta__text">
           <span class="eyebrow eyebrow--light">Agenda tu cita</span>
-          <h2>Tu valoración gratuita está a un mensaje de distancia</h2>
+          <h2>Escoge el día y la hora que te sirvan</h2>
+          <p class="cta__lead">Ves las horas libres en tiempo real y tu cita queda confirmada al instante.</p>
           <ul class="info">
             <li>📍 Calle 63 # 10-00, Chapinero, Bogotá</li>
             <li>🕗 Lun a vie 7:00 a.m. – 8:00 p.m. · Sáb 8:00 a.m. – 2:00 p.m.</li>
@@ -249,36 +250,54 @@
           </ul>
         </div>
 
-        <form class="form" id="bookingForm" novalidate>
-          <label>
-            Nombre completo
-            <input type="text" name="name" placeholder="Ej: María Gómez" required>
-          </label>
-          <label>
-            Servicio de interés
-            <select name="service" required>
-              <option value="">Selecciona una opción</option>
-              <option>Valoración general</option>
-              <option>Limpieza dental</option>
-              <option>Ortodoncia</option>
-              <option>Blanqueamiento</option>
-              <option>Implantes dentales</option>
-              <option>Diseño de sonrisa</option>
-              <option>Urgencia</option>
-            </select>
-          </label>
-          <label>
-            Horario preferido
-            <select name="time">
-              <option>Mañana</option>
-              <option>Tarde</option>
-              <option>Noche</option>
-            </select>
-          </label>
-          <p class="form__error" id="formError" role="alert"></p>
-          <button type="submit" class="btn btn--primary btn--full">Agendar por WhatsApp</button>
-          <small>Te responderemos en menos de 15 minutos en horario de atención.</small>
-        </form>
+        <div class="form-card">
+          <form class="form" id="bookingForm" novalidate>
+            <label>
+              Servicio
+              <select name="service" id="serviceSelect" required>
+                <option value="valoracion">Valoración general (gratis)</option>
+                <option value="limpieza">Limpieza dental</option>
+                <option value="ortodoncia">Ortodoncia (control)</option>
+                <option value="blanqueamiento">Blanqueamiento</option>
+                <option value="implantes">Implantes (valoración)</option>
+                <option value="urgencia">Urgencia</option>
+              </select>
+            </label>
+
+            <label>
+              Día
+              <input type="date" name="date" id="dateInput" required>
+            </label>
+
+            <div>
+              <span class="form__label">Hora</span>
+              <div class="slots" id="slots" aria-live="polite">
+                <p class="slots__msg">Escoge un día para ver las horas libres.</p>
+              </div>
+            </div>
+
+            <label>
+              Nombre completo
+              <input type="text" name="name" placeholder="Ej: María Gómez" autocomplete="name" required>
+            </label>
+            <label>
+              Celular
+              <input type="tel" name="phone" placeholder="Ej: 300 123 4567" autocomplete="tel" required>
+            </label>
+
+            <p class="form__error" id="formError" role="alert"></p>
+            <button type="submit" class="btn btn--primary btn--full" id="submitBtn">Confirmar cita</button>
+            <small>¿Prefieres hablar con alguien? <a href="#" id="waLink">Escríbenos por WhatsApp</a></small>
+          </form>
+
+          <div class="success" id="success" hidden>
+            <div class="success__icon">✓</div>
+            <h3>¡Tu cita quedó confirmada!</h3>
+            <p id="successText"></p>
+            <p class="success__small">Número de cita: <strong id="successId"></strong></p>
+            <button type="button" class="btn btn--ghost btn--full" id="newBooking">Agendar otra cita</button>
+          </div>
+        </div>
       </div>
     </section>
   </main>
